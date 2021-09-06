@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+	<meta charset="utf-8">
+	<title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+	<header>
+		<!-- example 5 left and center only with empty space right -->
+		<nav class="navbar navbar-expand-sm navbar-dark bg-primary flex-sm-nowrap flex-wrap">
+		    <div class="container-fluid">
+		        <button class="navbar-toggler flex-grow-sm-1 flex-grow-0 me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbar5">
+		            <span class="navbar-toggler-icon"></span>
+		        </button>
+		        <span class="navbar-brand flex-grow-1">My First Flask Bootstrap CRUD App</span>
+		        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+		            <ul class="navbar-nav ms-auto">
+		                <li class="nav-item">
+		                    <a class="nav-link" href="/contact">Contact</a>
+		                </li>
+		                <li class="nav-item">
+		                    <a class="nav-link" href="/">Home</a>
+		                </li>
+		            </ul>
+		        </div>
+		        <div class="flex-grow-1">
+		            <!--spacer-->
+		        </div>
+		    </div>
+		</nav>
+	</header>
+{% block body %}{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+</body>
+</html>
