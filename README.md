@@ -1,1 +1,2 @@
-# my_first_flask_app
+# My first flask app
+Built using Bootstrap, Udemy, and YouTube
