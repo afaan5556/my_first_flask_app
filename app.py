@@ -1,7 +1,23 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
-
+users = [
+{
+    'name': 'afaan.naqvi',
+    'first_name': 'Afaan',
+    'last_name': 'Naqvi',
+    'email': 'afaan.naqvi@gmail.com',
+    'phone': '+491709312851',
+    'hobbies': [
+    {
+    'name': 'football',
+    'level': 'love'
+    },
+    {
+    'name': 'music',
+    'level': 'enjoy'
+    }]
+}]
 
 
 app = Flask(__name__)
@@ -14,97 +30,77 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-#Creating model table for our CRUD database
-class Data(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-    phone = db.Column(db.String(100))
-
-
-    def __init__(self, name, email, phone):
-
-        self.name = name
-        self.email = email
-        self.phone = phone
-
-
-#This is the index route where we are going to
-#query on all our employee data
-@app.route('/')
-def Index():
-    # all_data = Data.query.all()
-
-    # return render_template("index.html", employees = all_data)
-    return render_template("index.html")
-
-
+# Index is long form scrolling splash page
 @app.route('/')
 def index():
     return render_template('index.html')
 
 
-@app.route('/manage')
-def manage():
-    return render_template('manage.html')
-
-
+# Contact page is just a form
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
 
-#this route is for inserting data to mysql database via html forms
-@app.route('/insert', methods = ['POST'])
-def insert():
 
-    if request.method == 'POST':
-
-        name = request.form['name']
-        email = request.form['email']
-        phone = request.form['phone']
+# CRUD Functionality starts here - Users and Hobbies
+@app.route('/crud/user')
+def crud():
+    return jsonify({'users': users})
 
 
-        my_data = Data(name, email, phone)
-        db.session.add(my_data)
-        db.session.commit()
+# Create a user
+@app.route('/crud/user', methods=['POST'])
+def post_user():
+    request_data = request.get_json()
+    new_user = {
+    'name': request_data['name'],
+    'first_name': request_data['first_name'],
+    'last_name': request_data['last_name'],
+    'email': request_data['email'],
+    'phone': request_data['phone'],
+    'hobbies': [],
+    }
+    users.append(new_user)
+    return jsonify(new_user)
 
-        flash("Employee Inserted Successfully")
-
-        return redirect(url_for('manage'))
-
-
-#this is our update route where we are going to update our employee
-@app.route('/update', methods = ['GET', 'POST'])
-def update():
-
-    if request.method == 'POST':
-        my_data = Data.query.get(request.form.get('id'))
-
-        my_data.name = request.form['name']
-        my_data.email = request.form['email']
-        my_data.phone = request.form['phone']
-
-        db.session.commit()
-        flash("Employee Updated Successfully")
-
-        return redirect(url_for('manage'))
+# Get a user
+@app.route('/crud/user/<string:name>')
+def get_user(name):
+    for user in users:
+        if user['name'] == name:
+            return jsonify(user)
+    return jsonify({'message': 'user not found'})
 
 
+# Get all users
+@app.route('/crud/user')
+def get_users():
+    return jsonify({'users': users})
 
 
-#This route is for deleting our employee
-@app.route('/delete/&lt;id&gt;/', methods = ['GET', 'POST'])
-def delete(id):
-    my_data = Data.query.get(id)
-    db.session.delete(my_data)
-    db.session.commit()
-    flash("Employee Deleted Successfully")
+# Create a user hobby
+@app.route('/crud/user/<string:name>/hobby', methods=['POST'])
+def post_user_hobby(name):
+    request_data = request.get_json()
+    for user in users:
+        if user['name'] == name:
+            new_hobby = {
+            'name': request_data['name'],
+            'level': request_data['level']
+            }
+            user['hobbies'].append(new_hobby)
+            return jsonify(new_hobby)
+    return jsonify({'message': 'user not found'})
 
-    return redirect(url_for('manage'))
 
-
-
-
+# Get user hobbies
+@app.route('/crud/user/<string:name>/hobby')
+def get_user_hobbies(name):
+    for user in users:
+        if user['name'] == name:
+            return jsonify(user['hobbies'])
+    return 'User not found'
+    
 
 
 if __name__ == "__main__":
