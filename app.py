@@ -1,111 +1,53 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template
+from flask_restful import Api
+from flask_jwt import JWT
+from db import db
 
-
+from security import authenticate, identity
+from resources.user import UserRegister
+from resources.visitor import Visitor, VisitorList
+from resources.visitor_group import VisitorGroup, VisitorGroupList
 
 
 app = Flask(__name__)
-app.secret_key = "Secret Key"
-
-#SqlAlchemy Database Configuration With Mysql
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/crud'
+#  Tell SQL Alchemy where the db is
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+# Turn off the flask sql alchemy tracker and use the more efficieny sql_alchemy tracker
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = 'my_first_flask_app_key'
+api = Api(app)
 
-db = SQLAlchemy(app)
-
-
-#Creating model table for our CRUD database
-class Data(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(100))
-    email = db.Column(db.String(100))
-    phone = db.Column(db.String(100))
+# Ask SQL Alchemy to create database and tables
+# Has to run before first request
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 
-    def __init__(self, name, email, phone):
+jwt = JWT(app, authenticate, identity)
 
-        self.name = name
-        self.email = email
-        self.phone = phone
+visitors = []
 
 
-#This is the index route where we are going to
-#query on all our employee data
-@app.route('/')
-def Index():
-    # all_data = Data.query.all()
-
-    # return render_template("index.html", employees = all_data)
-    return render_template("index.html")
-
-
+# Index is long form scrolling splash page
 @app.route('/')
 def index():
     return render_template('index.html')
 
 
-@app.route('/manage')
-def manage():
-    return render_template('manage.html')
-
-
+# Contact page is just a form
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+        
 
-#this route is for inserting data to mysql database via html forms
-@app.route('/insert', methods = ['POST'])
-def insert():
-
-    if request.method == 'POST':
-
-        name = request.form['name']
-        email = request.form['email']
-        phone = request.form['phone']
-
-
-        my_data = Data(name, email, phone)
-        db.session.add(my_data)
-        db.session.commit()
-
-        flash("Employee Inserted Successfully")
-
-        return redirect(url_for('manage'))
-
-
-#this is our update route where we are going to update our employee
-@app.route('/update', methods = ['GET', 'POST'])
-def update():
-
-    if request.method == 'POST':
-        my_data = Data.query.get(request.form.get('id'))
-
-        my_data.name = request.form['name']
-        my_data.email = request.form['email']
-        my_data.phone = request.form['phone']
-
-        db.session.commit()
-        flash("Employee Updated Successfully")
-
-        return redirect(url_for('manage'))
-
-
-
-
-#This route is for deleting our employee
-@app.route('/delete/&lt;id&gt;/', methods = ['GET', 'POST'])
-def delete(id):
-    my_data = Data.query.get(id)
-    db.session.delete(my_data)
-    db.session.commit()
-    flash("Employee Deleted Successfully")
-
-    return redirect(url_for('manage'))
-
-
-
-
+api.add_resource(Visitor, '/visitor/<string:name>')
+api.add_resource(VisitorList, '/visitors')
+api.add_resource(VisitorGroup, '/visitor_group/<string:name>')
+api.add_resource(VisitorGroupList, '/visitor_groups')
+api.add_resource(UserRegister, '/register')
 
 
 if __name__ == "__main__":
+    db.init_app(app)
     app.run(debug=True)
