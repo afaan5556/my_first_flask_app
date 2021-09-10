@@ -1,6 +1,8 @@
 from flask_restful import Resource, reqparse
 from flask_jwt import jwt_required
 from models.visitor import VisitorModel
+from models.visitor_group import VisitorGroupModel
+from flask import render_template, make_response, request
 
 
 class Visitor(Resource):
@@ -12,7 +14,7 @@ class Visitor(Resource):
             help="This field cannot be left blank"
             )
 
-    @jwt_required()
+    # @jwt_required()
     def get(self, name):
         try:
             visitor = VisitorModel.find_by_name(name)
@@ -28,7 +30,6 @@ class Visitor(Resource):
             return {'message': "A user with name '{}' already exists.".format(name)}, 400
 
         data = Visitor.parser.parse_args()
-
         visitor = VisitorModel(name, data['first_name'], data['last_name'], data['email'], data['phone'], data['visitor_group_id'])
         
         try:
@@ -70,4 +71,9 @@ class Visitor(Resource):
 
 class VisitorList(Resource):
     def get(self):
-        return {'visitors': [item.json() for item in VisitorModel.query.all()]}
+        headers = {'Content-Type': 'text/html'}
+        visitors = [visitor.json() for visitor in VisitorModel.query.all()]
+        # Render an HTML page
+        return make_response(render_template('visitors.html', visitors=visitors), 200, headers)
+        # OR return a json pbject
+        # return {'visitors': [visitor.json() for visitor in VisitorModel.query.all()]}
