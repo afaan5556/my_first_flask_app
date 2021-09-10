@@ -1,0 +1,144 @@
+{% extends 'layout.html' %}
+
+{% block title %} Visitors {% endblock %}
+{% block body %}
+<!-- Spacer-->
+<header class="masthead bg-faded">
+</header>
+<!-- Main Section-->
+<section class="page-section" id="visitors">
+    <div class="container">
+        <!-- Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">CRUD Demo</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- Tables Section-->
+        <div class="row justify-content-center">
+                <div class="row bg-dark h-100">
+                    <div class="col-lg-11 my-auto">
+                        <h2 class="text-uppercase text-white mb-4">Visitors</h2>
+                    </div>
+                    <div class="col-lg my-auto">
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+                    </div>
+                </div>
+                <!-- Visitor table -->
+                <table class="table table-light">
+                    <tr>
+                        <th>Visitorname</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Visitor Group</th>
+                        <th>Action</th>
+                    </tr>
+                    {%for visitor in visitors%}
+                    <tr>
+                        <td>{{visitor.name}}</td>
+                        <td>{{visitor.first_name}}</td>
+                        <td>{{visitor.last_name}}</td>
+                        <td>{{visitor.email}}</td>
+                        <td>{{visitor.phone}}</td>
+                        <td>{{visitor.visitor_group_id}}</td>
+                        <td>
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+                            <button type="button" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </table>
+        </div>
+    </div>
+</section>
+<!-- Modals -->
+<!-- Add Visitor Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add Visitor Record</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Add Visitor Form -->
+        <form>
+          <div class="mb-3">
+            <label for="name" class="form-label">Visitorname</label>
+            <input type="name" class="form-control" id="name" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="first_name" class="form-label">First Name</label>
+            <input type="name" class="form-control" id="first_name" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="name" class="form-control" id="last_name" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="phone" class="form-control" id="phone" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="user_group_id" class="form-label">Visitor Group ID</label>
+            <input type="id" class="form-control" id="user_group_id" aria-describedby="emailHelp">
+          </div>
+          <button type="submit" class="btn btn-primary">Add visitor</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Edit Visitor Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Visitor Record</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Edit Visitor Form -->
+        <form>
+          <div class="mb-3">
+            <label for="first_name" class="form-label">First Name</label>
+            <input type="name" class="form-control" id="first_name" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="last_name" class="form-label">Last Name</label>
+            <input type="name" class="form-control" id="last_name" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="phone" class="form-control" id="phone" aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="user_group_id" class="form-label">Visitor Group ID</label>
+            <input type="id" class="form-control" id="user_group_id" aria-describedby="emailHelp">
+          </div>
+          <button type="submit" class="btn btn-primary">Edit visitor</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
