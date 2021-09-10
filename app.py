@@ -26,8 +26,6 @@ def create_tables():
 
 jwt = JWT(app, authenticate, identity)
 
-visitors = []
-
 
 # Index is long form scrolling splash page
 @app.route('/')
