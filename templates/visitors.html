@@ -34,7 +34,6 @@
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Visitor Group</th>
                         <th>Action</th>
                     </tr>
                     {%for visitor in visitors%}
@@ -44,7 +43,6 @@
                         <td>{{visitor.last_name}}</td>
                         <td>{{visitor.email}}</td>
                         <td>{{visitor.phone}}</td>
-                        <td>{{visitor.visitor_group_id}}</td>
                         <td>
                             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                             <button type="button" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
@@ -66,30 +64,27 @@
       </div>
       <div class="modal-body">
         <!-- Add Visitor Form -->
-        <form>
+        <!-- <form action="{{url_for('visitor')}}" method="POST"> -->
+        <form action="{{url_for('visitor')}}" method="POST">
           <div class="mb-3">
             <label for="name" class="form-label">Visitorname</label>
-            <input type="name" class="form-control" id="name" aria-describedby="emailHelp">
+            <input type="name" class="form-control" name="name" id="name" aria-describedby="emailHelp">
           </div>
           <div class="mb-3">
             <label for="first_name" class="form-label">First Name</label>
-            <input type="name" class="form-control" id="first_name" aria-describedby="emailHelp">
+            <input type="name" class="form-control" name="first_name" id="first_name" aria-describedby="emailHelp">
           </div>
           <div class="mb-3">
             <label for="last_name" class="form-label">Last Name</label>
-            <input type="name" class="form-control" id="last_name" aria-describedby="emailHelp">
+            <input type="name" class="form-control" name="last_name" id="last_name" aria-describedby="emailHelp">
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp">
           </div>
           <div class="mb-3">
             <label for="phone" class="form-label">Phone</label>
-            <input type="phone" class="form-control" id="phone" aria-describedby="emailHelp">
-          </div>
-          <div class="mb-3">
-            <label for="user_group_id" class="form-label">Visitor Group ID</label>
-            <input type="id" class="form-control" id="user_group_id" aria-describedby="emailHelp">
+            <input type="phone" class="form-control" name="phone" id="phone" aria-describedby="emailHelp">
           </div>
           <button type="submit" class="btn btn-primary">Add visitor</button>
         </form>
@@ -110,26 +105,22 @@
       </div>
       <div class="modal-body">
         <!-- Edit Visitor Form -->
-        <form>
+        <form action="{{url_for('visitor')}}" method="PUT">
           <div class="mb-3">
             <label for="first_name" class="form-label">First Name</label>
-            <input type="name" class="form-control" id="first_name" aria-describedby="emailHelp">
+            <input type="name" class="form-control" name="first_name" id="first_name" aria-describedby="emailHelp">
           </div>
           <div class="mb-3">
             <label for="last_name" class="form-label">Last Name</label>
-            <input type="name" class="form-control" id="last_name" aria-describedby="emailHelp">
+            <input type="name" class="form-control" name="last_name" id="last_name" aria-describedby="emailHelp">
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+            <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp">
           </div>
           <div class="mb-3">
             <label for="phone" class="form-label">Phone</label>
-            <input type="phone" class="form-control" id="phone" aria-describedby="emailHelp">
-          </div>
-          <div class="mb-3">
-            <label for="user_group_id" class="form-label">Visitor Group ID</label>
-            <input type="id" class="form-control" id="user_group_id" aria-describedby="emailHelp">
+            <input type="phone" class="form-control" name="phone" id="phone" aria-describedby="emailHelp">
           </div>
           <button type="submit" class="btn btn-primary">Edit visitor</button>
         </form>

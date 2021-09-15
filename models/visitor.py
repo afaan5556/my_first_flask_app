@@ -10,25 +10,19 @@ class VisitorModel(db.Model):
     email = db.Column(db.String(80))
     phone = db.Column(db.String(80))
 
-    visitor_group_id = db.Column(db.Integer, db.ForeignKey('visitor_groups.id'))
-    visitor_group = db.relationship('VisitorGroupModel')
-
-
-    def __init__(self, name, first_name, last_name, email, phone, visitor_group_id):
+    def __init__(self, name, first_name, last_name, email, phone):
         self.name = name
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.phone = phone
-        self.visitor_group_id = visitor_group_id
 
     def json(self):
         return {'name': self.name,
                 'first_name': self.first_name,
                 'last_name': self.last_name,
                 'email': self.email,
-                'phone': self.phone,
-                'visitor_group_id': self.visitor_group_id
+                'phone': self.phone
                 }
 
     @classmethod
