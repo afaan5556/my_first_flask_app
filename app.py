@@ -1,6 +1,8 @@
 from flask import Flask, render_template, make_response, request, redirect, flash, url_for
 from models.visitor import VisitorModel
 from db import db
+import os
+import smtplib
 # from security import authenticate, identity
 # from flask_restful import Api
 # from flask_jwt import JWT
@@ -36,6 +38,26 @@ def index():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+# Contact form submission is an email send
+@app.route('/contact/send_email', methods=['POST'])
+def send_email():
+    data = {'name': request.form['name'],
+            'email': request.form['email'],
+            'phone': request.form['phone'],
+            'message': request.form['message']
+            }
+
+    email_message = "Subject: {}\n\nWebsite contact form filled in by {} with email address {} and phone {}. Here is what they said: {}".format('Flask App Contact', data['name'], data['email'], data['phone'], data['message'])
+
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login("afaan.naqvi@gmail.com", "avpkggaawnazzclv")
+    server.sendmail(data['email'], "afaan.naqvi@gmail.com", email_message)
+
+    flash('Email sent!')
+
+    return redirect(url_for('contact'), code=302)
 
 
 # Visitors table view
