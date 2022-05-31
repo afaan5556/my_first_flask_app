@@ -39,6 +39,11 @@ def index():
 def contact():
     return render_template('contact.html')
 
+# Where I've lived page is folium map
+@app.route('/where_ive_lived')
+def where_ive_lived():
+    return render_template('locations_map.html')
+
 # Contact form submission is an email send
 @app.route('/contact/send_email', methods=['POST'])
 def send_email():
