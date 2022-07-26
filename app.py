@@ -64,7 +64,6 @@ def send_email():
 
     return redirect(url_for('contact'), code=302)
 
-
 # Visitors table view
 @app.route('/visitors')
 def visitors():
@@ -136,6 +135,28 @@ def delete(user_name):
 
     flash('Visitor {} was successfully deleted!'.format(user_name))
     return redirect(url_for('visitors'))
+
+
+# Recruiting automation tool - RAT page
+@app.route('/recruiting_automation_tool')
+def rat():
+    return render_template('rat.html')
+
+# Request scripts button is an email send
+@app.route('/recruiting_automation_tool/request_scripts', methods=['POST'])
+def request_rat_scripts():
+    email = request.form['email']
+
+    email_message = "Subject: {}\n\nRAT scripts requested by {}".format('RAT Scripts Request', email)
+
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login("afaan.naqvi@gmail.com", "avpkggaawnazzclv")
+    server.sendmail(email, "afaan.naqvi@gmail.com", email_message)
+
+    flash('Email sent!')
+
+    return redirect(url_for('rat'), code=302)
 
 
 if __name__ == "__main__":
