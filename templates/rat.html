@@ -3,8 +3,7 @@
 {% block title %} Home {% endblock %}
 {% block body %}
         <!-- Masthead-->
-        <header class="masthead bg-primary text-white text-center" style="background-size: cover; background-position: center center; background-image: url('https://lh4.googleusercontent.com/v89fcMwLckwh-sipzrCOQITnOIgrAq81-VxpFvHhKLv8jOmrpMTwd6exndPo89PhczjU3txGABVtoNa5eEHtc9U'); transform: translate3d(0px, 0px, 0px);">
-            <!-- <div class="container d-flex align-items-center flex-column"> -->
+        <header class="masthead bg-primary text-white text-center">
             <div class="container d-flex align-items-center flex-column">
                 <!-- Masthead Heading-->
                 <h1 class="masthead-heading text-uppercase mb-0">Recruiting Automation Tool</h1>
@@ -60,7 +59,7 @@
                         <div class="container">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             </div>
-                            <img class="img-fluid" src="https://lh3.googleusercontent.com/wTL5SB0Z3Qk7eYgK4EzMqh65EfmXBhKMLBEKf6mchMDzn3EhP1001E0E8eST9Nql_hw0fVhOYdEr5-YMu8Y6bjY"/>
+                            <img class="img-fluid" src="{{url_for('static', filename='email_anxiety.jpg')}}">
                         </div>
                     </div>
                     <!-- Overview Item 1 Text-->
@@ -72,7 +71,7 @@
                     <div class="col-md-6 col-lg-3 mb-5">
                         <div class="container">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <img class="img-fluid" src="https://lh3.googleusercontent.com/V8A1rpMxrceG6M73Rq7FsFxmcoAgffpxcTSHgUkCdhf9JLMyyrMhQuDHihBe03AzXGABVlhTYY-ZyH7ZqtHCBg"/>
+                            <img class="img-fluid" src="{{url_for('static', filename='power_hour.jpg')}}">
                             </div>
                         </div>
                     </div>
@@ -88,7 +87,7 @@
                         <div class="container">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             </div>
-                            <img class="img-fluid" src="https://lh3.googleusercontent.com/o9WIQqwjKJzKHEcP75DuPtRrEJgSbDezwe7sPJZqC0iNhUkD2utnwy8FRzUH_YXcOIqRwDPeUs0t9LYsxYrgsj8"/>
+                            <img class="img-fluid" src="{{url_for('static', filename='cover.jpg')}}">
                         </div>
                     </div>
                     <!-- Overview Item 3 Text-->
@@ -101,13 +100,80 @@
                         <div class="container">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             </div>
-                            <img class="img-fluid" src="https://lh3.googleusercontent.com/tFNVrQtmd23mZEr66jQyiYr9A_FfkdaJtsEO34Fj-RhLLdPEmDe_EPaaYOvsRyqeGjejxOyn1nqyUA_ghNp2oWs"/>
+                            <img class="img-fluid" src="{{url_for('static', filename='indicators.jpg')}}">
                         </div>
                     </div>
                     <!-- Overview Item 4 Text-->
                     <div class="col-md-6 col-lg-3 mb-5">
                         <h5 class="mb-3">Leading indicators</h5>
                         <p>By aggregating notification email level activity, the automation surfaces candidate volume trends and load balancing opportunities across the team.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- How it works Section-->
+        <section class="page-section portfolio" id="portfolio">
+            <div class="row" style="color: white">_</div>
+            <div class="container">
+                <!-- How it works Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">How it works</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10 text-center">
+                        <p>RAT is a library of <a href="https://developers.google.com/apps-script">Google Apps Scripts</a></p>
+                        <p>These scripts continually search and label action requiring notification emails, while also parsing and writing the key content from these emails to a candidate tracker log.</p>
+                        <p>This allows recruiters to action directly from a concise, tabular summary of their tasks.</p>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+                <div class="container align-items-center text-center">
+                </div>
+                <div class="row">
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                </div>
+                <!-- How it works Titles-->
+                <div class="row justify-content-center">
+                    <!-- How it works Go From -->
+                    <div class="col-md-6 col-lg-6 mb-5">
+                        <div class="container text-center">
+                            <h4 class="text-uppercase mb-4">Go from this</h4>
+                        </div>
+                    </div>
+                    <!-- How it works Go To -->
+                    <div class="col-md-6 col-lg-6 mb-5">
+                        <div class="container text-center">
+                            <h4 class="text-uppercase mb-4">To this</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- How it works GIFs -->
+                <div class="row justify-content-center">
+                    <!-- How it works Go From GIF -->
+                    <div class="col-md-6 col-lg-6 mb-5">
+                        <div class="container text-center">
+                            <img class="img-fluid" src="{{url_for('static', filename='go_from.gif')}}">
+                        </div>
+                    </div>
+                    <!-- How it works Go To GIF -->
+                    <div class="col-md-6 col-lg-6 mb-5">
+                        <div class="container">
+                            <img class="img-fluid" src="{{url_for('static', filename='to_this.gif')}}">
+                        </div>
                     </div>
                 </div>
             </div>
