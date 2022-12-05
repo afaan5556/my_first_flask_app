@@ -138,16 +138,17 @@ def delete(user_name):
 
 
 # Recruiting automation tool - RAT page
-@app.route('/recruiting_automation_tool')
-def rat():
-    return render_template('rat.html')
+@app.route('/mail_unmerge')
+def mail_unmerge():
+    return render_template('mail_unmerge.html')
 
 # Request scripts button is an email send
-@app.route('/recruiting_automation_tool/request_scripts', methods=['POST'])
-def request_rat_scripts():
+@app.route('/mail_unmerge/question', methods=['POST'])
+def question():
     email = request.form['email']
+    question = request.form['question']
 
-    email_message = "Subject: {}\n\nRAT scripts requested by {}".format('RAT Scripts Request', email)
+    email_message = "Subject: {}\n\nMail Unmerge question asked by {}.\n\n{}".format('Mail Unmerge Question', email, question)
 
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
@@ -156,7 +157,7 @@ def request_rat_scripts():
 
     flash('Email sent!')
 
-    return redirect(url_for('rat'), code=302)
+    return redirect(url_for('mail_unmerge'), code=302)
 
 
 if __name__ == "__main__":
